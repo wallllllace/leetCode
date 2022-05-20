@@ -85,7 +85,7 @@ public:
             r->next = new ListNode(t % 10);
             r = r->next;
         }
-        delete r_list;
+//        delete r_list;
         return r_list->next;
     }
 };
