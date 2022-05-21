@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		EF96536B2836840200051376 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF96536A2836840200051376 /* main.cpp */; };
 		EF9653732836846000051376 /* Leetcode1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF9653712836846000051376 /* Leetcode1.cpp */; };
+		EF9653772838D39D00051376 /* json11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF9653762838D39D00051376 /* json11.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		EF96536A2836840200051376 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EF9653712836846000051376 /* Leetcode1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Leetcode1.cpp; sourceTree = "<group>"; };
 		EF9653722836846000051376 /* Leetcode1.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Leetcode1.hpp; sourceTree = "<group>"; };
+		EF9653752838D39D00051376 /* json11.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json11.hpp; sourceTree = "<group>"; };
+		EF9653762838D39D00051376 /* json11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json11.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,8 @@
 		EF9653692836840200051376 /* LeetCode */ = {
 			isa = PBXGroup;
 			children = (
+				EF9653762838D39D00051376 /* json11.cpp */,
+				EF9653752838D39D00051376 /* json11.hpp */,
 				EF96536A2836840200051376 /* main.cpp */,
 				EF9653712836846000051376 /* Leetcode1.cpp */,
 				EF9653722836846000051376 /* Leetcode1.hpp */,
@@ -124,6 +129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF9653772838D39D00051376 /* json11.cpp in Sources */,
 				EF9653732836846000051376 /* Leetcode1.cpp in Sources */,
 				EF96536B2836840200051376 /* main.cpp in Sources */,
 			);

@@ -15,6 +15,8 @@
 #include <iterator>
 #include <algorithm>
 
+#include "json11.hpp"
+
 //using std::vector;
 //using std::unordered_multimap;
 //using std::multimap;
@@ -22,6 +24,7 @@
 //using std::endl;
 
 using namespace std;
+using namespace json11;
 
 // 两数之和
 class Solution_leetcode_1 {
@@ -116,6 +119,57 @@ public:
      }
 };
 
+// 寻找两个正序数组的中位数
+class Solution_leetcode_4 {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        decltype(nums1.size() + nums2.size()) size = nums1.size() + nums2.size();
+        if (size == 0) {
+            return 0;
+        }
+        if (size == 1) {
+            return nums1.empty() ? nums2[0] : nums1[0];
+        }
+        bool even = size % 2 == 0;
+        int mid = size / 2;
+        int i = 0;
+        auto p = nums1.cbegin(), q = nums2.cbegin();
+        vector<int>::const_iterator last, curr; // 记录上一个指针
+        while (1) {
+            if (i == mid) {
+                return even ? (*last + *curr) / 2.0 : *curr;
+            }
+            if (p != nums1.cend() && q != nums2.cend()) {
+                if (*p > *q) {
+                    last = q;
+                    ++q;
+                } else {
+                    last = p;
+                    ++p;
+                }
+            }
+             else if (p == nums1.cend()) {
+                last = q;
+                ++q;
+            }
+            else  {
+                last = p;
+                ++p;
+            }
+            
+            ++i;
+            if (p == nums1.cend()) {
+                curr = q;
+            } else if (q == nums2.cend()) {
+                curr = p;
+            } else {
+                curr = *p < *q ? p : q;
+            }
+        }
+        return 0;
+    }
+};
+
 
 
 int main(int argc, const char * argv[]) {
@@ -128,9 +182,30 @@ int main(int argc, const char * argv[]) {
 //    cout << result[0] << "," << result[1] << endl;
     
     
-    Solution_leetcode_3 s3;
-    int length = s3.lengthOfLongestSubstring("abba");
-    cout << length << endl;
+//    Solution_leetcode_3 s3;
+//    int length = s3.lengthOfLongestSubstring("abba");
+//    cout << length << endl;
+    
+//    Json my_json = Json::object {
+//        { "key1", "value1" },
+//        { "key2", false },
+//        { "key3", Json::array { 1, 2, 3 } },
+//    };
+//    Json my_json = Json({
+//                { "key1", "value1" },
+//                { "key2", false },
+//                { "key3", Json::array { 1, 2, 3 } },
+//    });
+//    string json_str = my_json.dump();
+//
+//    cout << "json:" << json_str <<endl;
+    
+    Solution_leetcode_4 s4;
+    vector<int> nums1{};
+    vector<int> nums2{1,2,3};
+    double mid = s4.findMedianSortedArrays(nums1, nums2);
+    cout << "mid:" << mid << endl;
+    
     return 0;
 }
 
