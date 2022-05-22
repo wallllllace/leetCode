@@ -14,6 +14,7 @@
 #include <string>
 #include <iterator>
 #include <algorithm>
+#include <tuple>
 
 #include "json11.hpp"
 
@@ -171,6 +172,100 @@ public:
 };
 
 
+/// 最长回文子串
+/**
+ class Solution_leetcode_5 {
+ public:
+     string longestPalindrome(string s) {
+         if (s.empty()) {
+             return "";
+         }
+         vector<pair<int, bool>> dp; // 保存的是以i结尾的最大回文字符串，然后找出dp中最大的一个即可
+         // vector 不能通过下标添加元素
+         dp.push_back({0, true});
+         string longestStr = s.substr(0,1);
+         for (int i = 1; i < s.size(); ++i) {
+             if (dp[i-1].first != 0 && s[dp[i-1].first-1] == s[i]) {
+                 dp.push_back({dp[i-1].first-1,false});
+             }else if (i > 1 && s[i-2] == s[i]){
+                 if (dp[i-1].second) {
+                     dp.push_back({dp[i-1].first, true});
+                 } else {
+                     dp.push_back({i-2, false});
+                 }
+             }else if (s[i-1] == s[i]) {
+                 if (dp[i-1].second) {
+                     dp.push_back({dp[i-1].first, true});
+                 } else {
+                     dp.push_back({i-1, true});
+                 }
+             } else {
+                 dp.push_back({i,true});
+             }
+             cout << "dp[i]:" << dp[i].first << endl;
+             string s_i = s.substr(dp[i].first, i - dp[i].first + 1);
+             longestStr = longestStr.size() > s_i.size() ? longestStr : s_i;
+         }
+         return longestStr;
+     }
+ };
+ */
+
+class Solution_leetcode_5 {
+public:
+    
+    /// 思路就是：
+    /// 1、 一维dp到二维dp（i和j分别是左右边界）
+    /// 2、先确定子串长度为1，然后从2开始到n遍历
+    string longestPalindrome(string s) {
+        if (s.empty()) {
+            return "";
+        }
+        int n = s.size();
+        if (n == 1) {
+            return s;
+        }
+        // 不要定义一个字符串保存，这样每次都要执行subStr方法，开销（时间开销、空间开销）都会增加
+        // 只需保存起始位置和长度，最后返回时只用截取一次支付穿
+        int maxLen = 1;
+        int begin = 0;
+        // 二维数组，vector这样定义
+        vector<vector<int>> dp(n, vector<int>(n));
+        for (int i = 0; i < n; ++i)  {
+            dp[i][i] = 1;
+        }
+        // vector 不能通过下标添加元素
+        // 枚举长度，从2开始
+        for (int L = 2; L <= n; ++L) {
+            // 枚举左边界
+            for (int i = 0; i < n; ++i) {
+               // 右边界 j - i + 1 = L
+                int j = L + i - 1;
+                if (j >= n) {
+                    break;
+                }
+                if (s[i] != s[j]) {
+                    dp[i][j] = 0;
+                } else {
+                    // 如果两个边界相等
+                    if (L < 4) { // 只要是长度为3/2/1的都是回文字符串，不用特殊处理长度为1的子串了
+                        dp[i][j] = 1;
+                    } else {
+                        dp[i][j] = dp[i+1][j-1];
+                    }
+                }
+                if (dp[i][j] && L > maxLen) {
+                    maxLen = L;
+                    begin = i;
+                }
+            }
+        }
+        return s.substr(begin,maxLen);
+    }
+};
+
+// "aacabdkaaaa"
+
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -200,11 +295,15 @@ int main(int argc, const char * argv[]) {
 //
 //    cout << "json:" << json_str <<endl;
     
-    Solution_leetcode_4 s4;
-    vector<int> nums1{};
-    vector<int> nums2{1,2,3};
-    double mid = s4.findMedianSortedArrays(nums1, nums2);
-    cout << "mid:" << mid << endl;
+//    Solution_leetcode_4 s4;
+//    vector<int> nums1{};
+//    vector<int> nums2{1,2,3};
+//    double mid = s4.findMedianSortedArrays(nums1, nums2);
+//    cout << "mid:" << mid << endl;
+    
+    Solution_leetcode_5 s5;
+    string subs = s5.longestPalindrome("aca");
+    cout << "最长回文子串是：" << subs << endl;
     
     return 0;
 }
